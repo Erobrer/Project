@@ -1,54 +1,143 @@
-.navbar-nav .nav-link {
-    font-weight: 500;
-    font-size: 16px;
+/* === GENEL AYARLAR === */
+body {
+  margin: 0;
+  padding-top: 0px;
+  background-color: #111;
+  color: #eee;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* === NAVBAR === */
+.navbar {
+  padding: 0.5rem 1rem;
+}
+
+.fatih-logo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: white;
+  border: 2px solid white;
+  padding: 6px 14px;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(255,255,255,0.2);
+}
+
+.fatih-logo:hover {
+  background-color: white;
+  color: black;
+  border-color: white;
+  box-shadow: 0 0 12px rgba(255,255,255,0.4);
 }
 
 .nav-link {
-    color: white;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    position: relative;
-  }
-  
+  color: white !important;
+  font-weight: 500;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
 .nav-link::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background-color: #ffffffcc; /* yarı şeffaf beyaz */
-    transition: width 0.3s ease, left 0.3s ease;
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #fff;
+  transition: width 0.3s ease, left 0.3s ease;
 }
-  
-.nav-link:hover {
-    color: #f8f9fa; /* açık beyaz */
-    text-shadow: 0 0 8px #ffffff88; /* parıltı efekti */
-}
-  
+
 .nav-link:hover::after {
-    width: 100%;
-    left: 0;
+  width: 100%;
+  left: 0;
+}
+
+.nav-link.active::after {
+  width: 100%;
+  left: 0;
 }
 
 .btn-register {
-    background-color: white;
-    color: black;
-    border: 1px solid #ced4da;
-    transition: all 0.3s ease;
-  }
-  
-  .btn-register:hover {
-    background-color: #495057;
-    color: white;
-  }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  background-color: white;
+  color: black;
+  border: 1px solid #ced4da;
+  transition: all 0.3s ease;
+}
+
+.btn-register:hover {
+  background-color: #495057;
+  color: white;
+}
+
+/* === HERO BÖLÜMÜ === */
+.hero-section {
+  height: 100vh;
+  background: linear-gradient(135deg, #111 0%, #333 35%, #999 70%, #eee 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  color: white;
+}
+
+#rotating-text {
+  font-size: 1.75rem;
+  font-weight: 500;
+  min-height: 2.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#slogan-text {
+  font-size: 2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: none;
+}
+
+.scroll-down {
+  font-size: 2rem;
+  animation: bounce 1s infinite;
+  color: white;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+/* === ŞEHRİM BÖLÜMÜ === */
+#sehrim h2 {
+  color: white;
+}
+
+#sehrim p,
+#sehrim li {
+  font-size: 1rem;
+  color: #ddd;
+}
+
+#sehrim ul {
+  padding-left: 1.2rem;
+}
+
+#sehrim iframe {
+  border-radius: 10px;
+  border: 0;
+  width: 100%;
+  height: 450px;
+}
+
+/* === DİĞER === */
+.lead {
+  max-width: 600px;
+  margin: 0 auto;
+  color: #eee;
+}
