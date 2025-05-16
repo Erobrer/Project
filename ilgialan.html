@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>İlgi Alanlarım - Fatihakbiyik</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Index.css">
+  <style>
+    body {
+      background-color: #111;
+      color: #eee;
+      font-family: 'Montserrat', sans-serif;
+      padding-top: 80px;
+    }
+    section {
+      padding: 60px 0;
+    }
+    .card {
+      background-color: #1a1a1a;
+      border: none;
+      border-radius: 12px;
+      color: #fff;
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: scale(1.03);
+    }
+    .card img {
+      height: 200px;
+      object-fit: cover;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+    h2 {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark bg-dark fixed-top d-flex justify-content-between align-items-center px-4">
+  <a href="index.html" class="fatih-logo">F</a>
+  <ul class="nav flex-grow-1 justify-content-center">
+    <li class="nav-item"><a class="nav-link" href="index.html">Anasayfa</a></li>
+    <li class="nav-item"><a class="nav-link" href="cv.html">CV</a></li>
+    <li class="nav-item"><a class="nav-link" href="sehrim.html">Şehrim</a></li>
+    <li class="nav-item"><a class="nav-link" href="miras.html">Mirasımız</a></li>
+    <li class="nav-item"><a class="nav-link" href="takim.html">Takımımız</a></li>
+    <li class="nav-item"><a class="nav-link active text-warning" href="ilgi.html">İlgi Alanlarım</a></li>
+    <li class="nav-item"><a class="nav-link" href="iletisim.html">İletişim</a></li>
+  </ul>
+  <div>
+    <a href="login.html" class="btn btn-outline-light me-2">Giriş</a>
+    <a href="login.html" class="btn btn-register">Kayıt Ol</a>
+  </div>
+</nav>
+
+<!-- İLGİ ALANLARI -->
+<section>
+  <div class="container">
+    <div class="row text-center mb-5">
+      <div class="col">
+        <h2>İlgi Alanlarım</h2>
+        <p class="text-secondary">Hobilerim ve keyif aldığım aktiviteler</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card">
+          <img src="img/music.jpg" class="card-img-top" alt="Müzik">
+          <div class="card-body">
+            <h5 class="card-title">Müzik</h5>
+            <p class="card-text">Çeşitli türlerde müzik dinlemek, enstrüman çalmak ve müzik üzerine araştırma yapmayı seviyorum.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <img src="img/tech.jpg" class="card-img-top" alt="Teknoloji">
+          <div class="card-body">
+            <h5 class="card-title">Teknoloji</h5>
+            <p class="card-text">Yapay zeka, yazılım geliştirme ve yeni teknolojiler hakkında içerikler takip ederim.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <img src="img/sinema.jpg" class="card-img-top" alt="Sinema">
+          <div class="card-body">
+            <h5 class="card-title">Sinema</h5>
+            <p class="card-text">Film izlemeyi, yönetmenleri ve sinema tarihini araştırmayı çok severim.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
