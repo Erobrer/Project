@@ -27,6 +27,7 @@
     .card:hover {
       transform: scale(1.03);
     }
+    .card img-top,
     .card img {
       height: 200px;
       object-fit: cover;
@@ -44,7 +45,6 @@
 <nav class="navbar navbar-dark bg-dark fixed-top d-flex justify-content-between align-items-center px-4">
   <a href="index.html" class="fatih-logo">F</a>
   <ul class="nav flex-grow-1 justify-content-center">
-    <li class="nav-item"><a class="nav-link" href="index.html">Anasayfa</a></li>
     <li class="nav-item"><a class="nav-link" href="cv.html">CV</a></li>
     <li class="nav-item"><a class="nav-link" href="sehrim.html">Şehrim</a></li>
     <li class="nav-item"><a class="nav-link" href="miras.html">Mirasımız</a></li>
@@ -96,8 +96,194 @@
         </div>
       </div>
     </div>
+            <!-- API KARTLARI - 3'lü Grid -->
+    <div class="row justify-content-center text-center g-4 mt-5">
+      <!-- 🎵 Müzik Kartı -->
+      <div class="col-md-4">
+        <div class="card bg-dark text-white h-100">
+          <div class="card-body text-center">
+            <h5 class="card-title">Müzik Önerisi (Last.fm)</h5>
+            <img id="musicCover" class="img-fluid rounded mb-3" style="max-height:200px;" alt="Albüm Kapağı">
+            <p class="card-text fw-semibold" id="musicTitle">Yükleniyor...</p>
+          </div>
+          <div class="card-footer text-muted text-center" id="musicFooter">Last.fm'den çekiliyor...</div>
+        </div>
+      </div>
+
+      <!-- 📰 Teknoloji Kartı -->
+      <div class="col-md-4">
+        <div class="card bg-dark text-white h-100">
+          <div class="card-body text-center">
+            <h5 class="card-title">Teknoloji Haberleri</h5>
+            <img id="techImage" src="" class="img-fluid rounded mb-3" alt="Haber Görseli" style="max-height: 180px;">
+            <p class="card-text fw-semibold" id="techTitle">Yükleniyor...</p>
+            <p class="card-text small" id="techDesc">Kısa açıklama...</p>
+          </div>
+          <div class="card-footer text-muted text-center" id="techFooter">Kaynak: -</div>
+        </div>
+      </div>
+      <!-- 🎬 Film Kartı -->
+      <div class="col-md-4">
+        <div class="card bg-dark align-middle text-white h-100">
+          <div class="card-body">
+              <h5 class="card-title" id="filmTitle">Yükleniyor...</h5>
+              <img id="filmPoster" class="img-fluid rounded mb-2" style="max-height:200px; object-fit:cover;" alt="Film Afişi">
+              <p class="card-text" id="filmCast">Başroller: ...</p>
+              <p class="card-text" id="filmDirector">Yönetmen: ...</p>
+              <p class="card-text" id="filmRating">Puan: ...</p>
+              <a id="filmIMDB" class="btn btn-warning btn-sm mt-2" href="#" target="_blank">IMDb'de Gör</a>
+            </div>
+          </div>
+        </div>  
+      </div>
   </div>
 </section>
+
+<script>
+  const musicTitle = document.getElementById('musicTitle');
+  const musicCover = document.getElementById('musicCover');
+  const musicFooter = document.getElementById('musicFooter');
+
+  let musicList = [];
+  let currentMusicIndex = 0;
+
+  async function fetchMusicList() {
+    try {
+      const res = await fetch("https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=19dcb17ddcb74fed35d99f6b087b975d&format=json");
+      const data = await res.json();
+      musicList = data.tracks.track;
+      showNextMusic();
+    } catch (err) {
+      console.error("Veri alınamadı:", err);
+      musicTitle.textContent = "Yüklenemedi.";
+    }
+  }
+
+  function showNextMusic() {
+  if (musicList.length === 0) return;
+
+  const track = musicList[currentMusicIndex];
+  const image = track.image?.[3]?.['#text'] || 'https://via.placeholder.com/300x200?text=No+Image';
+
+  musicTitle.textContent = `${track.name} - ${track.artist.name}`;
+  musicCover.src = image;
+  musicFooter.textContent = `Dinlenme: ${track.playcount}`;
+
+  currentMusicIndex = (currentMusicIndex + 1) % musicList.length;
+  }
+  
+
+  fetchMusicList();
+  setInterval(showNextMusic, 5000);
+</script>
+
+
+
+<script>
+  const techTitle = document.getElementById('techTitle');
+  const techDesc = document.getElementById('techDesc');
+  const techFooter = document.getElementById('techFooter');
+  const techImage = document.getElementById('techImage');
+
+  let techList = [];
+  let currentTechIndex = 0;
+
+  async function fetchTechNews() {
+    try {
+      const url = `https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=389d8ff4980f4393829a51e9de84c2a4`;
+      const data = await res.json();
+      techList = data.articles;
+      console.log("Cevap geldi mi?");
+      console.log(data);
+      showNextTech();
+    } catch (error) {
+      console.error("Teknoloji haberleri alınamadı:", error);
+      techTitle.textContent = "Haber alınamadı.";
+    }
+  }
+
+  function showNextTech() {
+    if (techList.length === 0) return;
+
+    const article = techList[currentTechIndex];
+
+    techTitle.innerHTML = `<a href="${article.url}" target="_blank" class="text-light text-decoration-none">${article.title}</a>`;
+    techDesc.textContent = article.description
+      ? article.description.slice(0, 120) + (article.description.length > 120 ? '...' : '')
+      : 'Açıklama bulunamadı.';
+    techImage.src = article.urlToImage || 'https://via.placeholder.com/300x180?text=No+Image';
+    techFooter.textContent = `Kaynak: ${article.source.name}`;
+
+    currentTechIndex = (currentTechIndex + 1) % techList.length;
+  }
+
+  fetchTechNews();
+  setInterval(showNextTech, 6000);
+</script>
+
+
+
+
+
+<script>
+  const filmTitle = document.getElementById('filmTitle');
+  const filmPoster = document.getElementById('filmPoster');
+  const filmCast = document.getElementById('filmCast');
+  const filmDirector = document.getElementById('filmDirector');
+  const filmRating = document.getElementById('filmRating');
+  const filmIMDB = document.getElementById('filmIMDB');
+
+  let movieList = [];
+  let currentMovieIndex = 0;
+
+  const apiKey = '131791fc4d9fbb8e4705e5774af532f0'; // kendi key’inle değiştir
+
+  async function fetchMovieList() {
+    try {
+      const res = await fetch(`https://api.themoviedb.org/3/discover/movie?sort_by=vote_average.desc&vote_count.gte=1000&api_key=${apiKey}&language=tr-TR`);
+      const data = await res.json();
+      movieList = data.results;
+      showNextMovie();
+    } catch (error) {
+      filmTitle.textContent = "Film alınamadı";
+      console.error(error);
+    }
+  }
+
+  async function showNextMovie() {
+    if (movieList.length === 0) return;
+
+    const movie = movieList[currentMovieIndex];
+
+    // Temel bilgileri göster
+    filmTitle.textContent = movie.title;
+    filmPoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+    filmRating.textContent = `Puan: ${movie.vote_average} / Yıl: ${movie.release_date.substring(0, 4)}`;
+
+    // Detayları almak için ek istek (oyuncu ve yönetmen için)
+    const detailRes = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${apiKey}&language=tr-TR`);
+    const credits = await detailRes.json();
+
+    const director = credits.crew.find(person => person.job === 'Director');
+    const castNames = credits.cast.slice(0, 3).map(actor => actor.name).join(', ');
+
+    filmCast.textContent = `Başroller: ${castNames}`;
+    filmDirector.textContent = `Yönetmen: ${director ? director.name : '-'}`;
+
+    // IMDb linki
+    const movieDetailsRes = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${apiKey}`);
+    const movieDetails = await movieDetailsRes.json();
+    filmIMDB.href = `https://www.imdb.com/title/${movieDetails.imdb_id}`;
+
+    // Sıradaki filme geç
+    currentMovieIndex = (currentMovieIndex + 1) % movieList.length;
+  }
+
+  fetchMovieList();
+  setInterval(showNextMovie, 8000);
+</script>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
