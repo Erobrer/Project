@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>İletişim Sonuç</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="Index.css">
+  <style>
+    body {
+      background-color: #111;
+      color: #eee;
+      font-family: 'Montserrat', sans-serif;
+      padding-top: 80px;
+    }
+    section {
+      padding: 60px 0;
+    }
+    .card {
+      background-color: #1a1a1a;
+      border: 1px solid #444;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark bg-dark fixed-top d-flex justify-content-between align-items-center px-4">
+  <a href="index.html" class="fatih-logo">F</a>
+  <ul class="nav flex-grow-1 justify-content-center">
+    <li class="nav-item"><a class="nav-link" href="index.html">Anasayfa</a></li>
+    <li class="nav-item"><a class="nav-link" href="iletisim.html">İletişim</a></li>
+  </ul>
+</nav>
+
+<!-- VERİ GÖRÜNTÜLEME -->
+<section>
+  <div class="container">
+    <div class="row justify-content-center text-center mb-4">
+      <div class="col-lg-8">
+        <h2 class="text-warning">Gönderilen İletişim Bilgileri</h2>
+        <p class="text-secondary">Formdan gönderdiğiniz bilgiler aşağıda listelenmiştir:</p>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card p-4 shadow text-light">
+          <div id="output"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-dark text-light mt-5 pt-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h6>Fatih Akbıyık</h6>
+        <p class="text-secondary small">Bu sayfa, gönderilen form bilgilerini göstermektedir.</p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <p class="text-secondary small mt-4 mt-md-0">© 2025 Fatih Akbıyık | Tüm hakları saklıdır.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- JS -->
+<script>
+  const data = JSON.parse(sessionStorage.getItem("iletisimFullForm"));
+  const output = document.getElementById("output");
+
+  if (data) {
+    output.innerHTML = `
+      <p><strong>Ad Soyad:</strong> ${data.adsoyad}</p>
+      <p><strong>E-posta:</strong> ${data.email}</p>
+      <p><strong>Telefon:</strong> ${data.telefon}</p>
+      <p><strong>Cinsiyet:</strong> ${data.cinsiyet}</p>
+      <p><strong>İletişim Nedeni:</strong> ${data.neden}</p>
+      <p><strong>Seçilen Hizmetler:</strong> ${data.hizmet.join(', ')}</p>
+      <p><strong>Görüşme Tarihi:</strong> ${data.tarih}</p>
+      <p><strong>Mesaj:</strong> ${data.mesaj}</p>
+    `;
+  } else {
+    output.innerHTML = `<div class="alert alert-warning">Veri bulunamadı. Lütfen formu doldurup tekrar gönderin.</div>`;
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
