@@ -102,7 +102,7 @@
       <div class="col-md-4">
         <div class="card bg-dark text-white h-100">
           <div class="card-body text-center">
-            <h5 class="card-title">Müzik Önerisi (Last.fm)</h5>
+            <h5 class="card-title">Müzik Önerisi</h5>
             <img id="musicCover" class="img-fluid rounded mb-3" style="max-height:200px;" alt="Albüm Kapağı">
             <p class="card-text fw-semibold" id="musicTitle">Yükleniyor...</p>
           </div>
@@ -149,35 +149,30 @@
 
   async function fetchMusicList() {
     try {
-      const res = await fetch("https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=19dcb17ddcb74fed35d99f6b087b975d&format=json");
+      const res = await fetch("muzik.json"); // aynı klasörde olmalı
       const data = await res.json();
-      musicList = data.tracks.track;
+      musicList = data;
       showNextMusic();
     } catch (err) {
-      console.error("Veri alınamadı:", err);
-      musicTitle.textContent = "Yüklenemedi.";
+      musicTitle.textContent = "Müzik verisi alınamadı.";
     }
   }
 
   function showNextMusic() {
-  if (musicList.length === 0) return;
+    if (musicList.length === 0) return;
 
-  const track = musicList[currentMusicIndex];
-  const image = track.image?.[3]?.['#text'] || 'https://via.placeholder.com/300x200?text=No+Image';
+    const track = musicList[currentMusicIndex];
 
-  musicTitle.textContent = `${track.name} - ${track.artist.name}`;
-  musicCover.src = image;
-  musicFooter.textContent = `Dinlenme: ${track.playcount}`;
+    musicTitle.textContent = `${track.title} - ${track.artist}`;
+    musicCover.src = track.cover;
+    musicFooter.textContent = `Albüm: ${track.album}`;
 
-  currentMusicIndex = (currentMusicIndex + 1) % musicList.length;
+    currentMusicIndex = (currentMusicIndex + 1) % musicList.length;
   }
-  
 
   fetchMusicList();
   setInterval(showNextMusic, 5000);
 </script>
-
-
 
 <script>
   const techTitle = document.getElementById('techTitle');
@@ -191,7 +186,8 @@
   async function fetchTechNews() {
     try {
       const url = `https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=389d8ff4980f4393829a51e9de84c2a4`;
-      const data = await res.json();
+      const res = await fetch(url);
+      const data = await res.json();      
       techList = data.articles;
       console.log("Cevap geldi mi?");
       console.log(data);

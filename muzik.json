@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Master of Puppets",
+    "artist": "Metallica",
+    "album": "Master of Puppets",
+    "cover": "img/metallica.jpeg"
+  },
+  {
+    "title": "Painkiller",
+    "artist": "Judas Priest",
+    "album": "Painkiller",
+    "cover": "img/judas.jpeg"
+  },
+  {
+    "title": "Hallowed Be Thy Name",
+    "artist": "Iron Maiden",
+    "album": "The Number of the Beast",
+    "cover": "img/maiden.jpeg"
+  },
+  {
+    "title": "War Pigs",
+    "artist": "Black Sabbath",
+    "album": "Paranoid",
+    "cover": "img/sabbath.jpeg"
+  },
+  {
+    "title": "Ghost of Perdition",
+    "artist": "Opeth",
+    "album": "Ghost Reveries",
+    "cover": "img/opeth.jpeg"
+  },
+  {
+    "title": "Bleed",
+    "artist": "Meshuggah",
+    "album": "obZen",
+    "cover": "img/meshuggah.jpeg"
+  },
+  {
+    "title": "Valhalla",
+    "artist": "Blind Guardian",
+    "album": "Follow the Blind",
+    "cover": "img/blind.jpeg"
+  }
+]
