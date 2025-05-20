@@ -48,9 +48,8 @@
     <li class="nav-item"><a class="nav-link" href="ilgialan.html">İlgi Alanlarım</a></li>
     <li class="nav-item"><a class="nav-link active text-warning" href="iletisim.html">İletişim</a></li>
   </ul>
-  <div>
-    <a href="login.html" class="btn btn-outline-light me-2">Giriş</a>
-    <a href="login.html" class="btn btn-register">Kayıt Ol</a>
+  <div id="navbarUserArea">
+  <!-- JavaScript burayı dolduracak -->
   </div>
 </nav>
 
@@ -130,6 +129,28 @@
     </form>
   </div>
 </section>
+
+<script>
+  const navbarArea = document.getElementById('navbarUserArea');
+  const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+
+  if (loggedUser) {
+    navbarArea.innerHTML = `
+      <span class="text-light me-3">Merhaba, <strong>${loggedUser.username}</strong></span>
+      <button class="btn btn-outline-warning btn-sm" id="logoutBtn">Çıkış Yap</button>
+    `;
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('loggedUser');
+      location.reload(); // sayfayı yenile
+    });
+  } else {
+    navbarArea.innerHTML = `
+      <a href="giris.html" class="btn btn-outline-light me-2">Giriş</a>
+      <a href="kayit.html" class="btn btn-register">Kayıt Ol</a>
+    `;
+  }
+</script>
 
 <footer class="bg-dark text-light mt-5 pt-4">
   <div class="container">
