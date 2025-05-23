@@ -5,39 +5,12 @@
   <title>İletişim - Fatihakbiyik</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="Index.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
-  <style>
-    body {
-      background-color: #111;
-      color: #eee;
-      font-family: 'Montserrat', sans-serif;
-      padding-top: 80px;
-    }
-    section {
-      padding: 60px 0;
-    }
-    .form-control, .form-control:focus {
-      background-color: #1a1a1a;
-      border: 1px solid #444;
-      color: #fff;
-    }
-    .btn-custom {
-      background-color: #ffc107;
-      border: none;
-      color: #000;
-      font-weight: bold;
-    }
-    h2 {
-      color: #fff;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar navbar-dark bg-dark fixed-top d-flex justify-content-between align-items-center px-4">
   <a href="index.html" class="fatih-logo">F</a>
   <ul class="nav flex-grow-1 justify-content-center">
@@ -48,87 +21,85 @@
     <li class="nav-item"><a class="nav-link" href="ilgialan.html">İlgi Alanlarım</a></li>
     <li class="nav-item"><a class="nav-link active text-warning" href="iletisim.html">İletişim</a></li>
   </ul>
-  <div id="navbarUserArea">
-  <!-- JavaScript burayı dolduracak -->
-  </div>
+  <div id="navbarUserArea"></div>
 </nav>
 
-<!-- İLETİŞİM FORMU -->
-<section>
-  <div id="app">
-    <form @submit.prevent="gonder" class="bg-dark p-4 rounded shadow">
-      <div class="row mb-3">
-        <div class="col-md-6">
+<div class="container" id="app">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h2 class="text-center mb-4 text-warning">İletişim Formu</h2>
+      <form @submit.prevent="gonder" class="bg-dark p-4 rounded shadow">
+        <div class="mb-3">
           <label class="form-label">Ad Soyad</label>
           <input type="text" class="form-control" v-model="form.adsoyad">
+          <div v-if="hatalar.adsoyad" class="text-danger small mt-1">Ad soyad boş olamaz.</div>
         </div>
-        <div class="col-md-6">
+
+        <div class="mb-3">
           <label class="form-label">E-posta</label>
           <input type="text" class="form-control" v-model="form.email">
+          <div v-if="hatalar.email" class="text-danger small mt-1">Geçerli bir e-posta girin (ornek@mail.com).</div>
         </div>
-      </div>
 
-      <div class="row mb-3">
-        <div class="col-md-6">
+        <div class="mb-3">
           <label class="form-label">Telefon</label>
-          <input type="tel" class="form-control" v-model="form.telefon" placeholder="05xxxxxxxxx">
+          <input type="text" class="form-control" v-model="form.telefon" placeholder="05xxxxxxxxx">
+          <div v-if="hatalar.telefon" class="text-danger small mt-1">Telefon sadece rakam olmalı (10-11 hane).</div>
         </div>
-        <div class="col-md-6">
-          <label class="form-label">Görüşme Tarihi</label>
-          <input type="date" class="form-control" v-model="form.tarih">
-        </div>
-      </div>
 
-      <div class="mb-3">
-        <label class="form-label">Cinsiyet</label><br>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" value="Erkek" v-model="form.cinsiyet" id="erkek">
-          <label class="form-check-label" for="erkek">Erkek</label>
+        <div class="mb-3">
+          <label class="form-label">Cinsiyet</label><br>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value="Erkek" v-model="form.cinsiyet" id="erkek">
+            <label class="form-check-label" for="erkek">Erkek</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value="Kadın" v-model="form.cinsiyet" id="kadin">
+            <label class="form-check-label" for="kadin">Kadın</label>
+          </div>
+          <div v-if="hatalar.cinsiyet" class="text-danger small mt-1">Cinsiyet seçimi zorunludur.</div>
         </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" value="Kadın" v-model="form.cinsiyet" id="kadin">
-          <label class="form-check-label" for="kadin">Kadın</label>
-        </div>
-      </div>
 
-      <div class="mb-3">
-        <label class="form-label">İletişim Nedeni</label>
-        <select class="form-select" v-model="form.neden">
-          <option disabled value="">Seçiniz</option>
-          <option>Geri Bildirim</option>
-          <option>Destek Talebi</option>
-          <option>İş Birliği</option>
-        </select>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Hizmet Seçimi</label>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="Web Tasarım" v-model="form.hizmet">
-          <label class="form-check-label">Web Tasarım</label>
+        <div class="mb-3">
+          <label class="form-label">İletişim Nedeni</label>
+          <select class="form-select" v-model="form.neden">
+            <option disabled value="">Seçiniz</option>
+            <option>Geri Bildirim</option>
+            <option>Destek Talebi</option>
+            <option>İş Birliği</option>
+          </select>
         </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="Danışmanlık" v-model="form.hizmet">
-          <label class="form-check-label">Danışmanlık</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="Eğitim" v-model="form.hizmet">
-          <label class="form-check-label">Eğitim</label>
-        </div>
-      </div>
 
-      <div class="mb-3">
-        <label class="form-label">Mesaj</label>
-        <textarea class="form-control" rows="4" v-model="form.mesaj" placeholder="Mesajınızı buraya yazın..."></textarea>
-      </div>
+        <div class="mb-3">
+          <label class="form-label">İlgilendiğiniz Alanlar</label><br>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="alan1" value="Web Tasarımı" v-model="form.ilgi">
+            <label class="form-check-label" for="alan1">Web Tasarımı</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="alan2" value="Yapay Zeka" v-model="form.ilgi">
+            <label class="form-check-label" for="alan2">Yapay Zeka</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="alan3" value="Veri Bilimi" v-model="form.ilgi">
+            <label class="form-check-label" for="alan3">Veri Bilimi</label>
+          </div>
+          <div v-if="hatalar.ilgi" class="text-danger small mt-1">En az bir ilgi alanı seçmelisiniz.</div>
+        </div>
 
-      <div class="d-flex justify-content-between mt-4">
-        <button type="button" class="btn btn-secondary px-4" @click="temizle">Temizle</button>
-        <button type="submit" class="btn btn-warning text-dark fw-bold px-4">Gönder</button>
-      </div>
-    </form>
+        <div class="mb-3">
+          <label class="form-label">Mesaj</label>
+          <textarea class="form-control" rows="4" v-model="form.mesaj"></textarea>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-secondary px-4" @click="temizle">Temizle</button>
+          <button type="submit" class="btn btn-custom px-4">Gönder</button>
+        </div>
+      </form>
+    </div>
   </div>
-</section>
+</div>
 
 <script>
   const navbarArea = document.getElementById('navbarUserArea');
@@ -142,7 +113,7 @@
 
     document.getElementById('logoutBtn').addEventListener('click', () => {
       localStorage.removeItem('loggedUser');
-      location.reload(); // sayfayı yenile
+      location.reload();
     });
   } else {
     navbarArea.innerHTML = `
@@ -152,54 +123,6 @@
   }
 </script>
 
-<footer class="bg-dark text-light mt-5 pt-4">
-  <div class="container">
-    <div class="row">
-      <!-- Sol Bilgi -->
-      <div class="col-md-4 mb-3">
-        <h5>Fatih Akbıyık</h5>
-        <p class="text-secondary small">
-          Kişisel projelerimi ve tutkularımı bu sitede bir araya getiriyorum.
-        </p>
-      </div>
-
-      <!-- Sayfalar -->
-      <div class="col-md-4 mb-3">
-        <h6>Sayfalar</h6>
-        <ul class="list-unstyled">
-          <li><a href="index.html" class="text-light text-decoration-none">Anasayfa</a></li>
-          <li><a href="sehrim.html" class="text-light text-decoration-none">Şehrim</a></li>
-          <li><a href="ilgialan.html" class="text-light text-decoration-none">İlgi Alanlarım</a></li>
-          <li><a href="iletisim.html" class="text-light text-decoration-none">İletişim</a></li>
-        </ul>
-      </div>
-
-      <!-- Sosyal Medya -->
-      <div class="col-md-4 mb-3">
-        <h6>Beni Takip Et</h6>
-        <a href="#" class="text-light me-3 fs-5"><i class="fab fa-github"></i></a>
-        <a href="https://www.instagram.com/fatihakbiyiq/profilecard/?igsh=NGU0YnZwamw5MDB2" class="text-light fs-5"><i class="fab fa-instagram"></i></a>
-      </div>
-    </div>
-  </div>
-
-  <div class="bg-black text-center text-secondary py-2 position-relative">
-    © 2025 Fatih Akbıyık | Tüm hakları saklıdır.
-
-    <!-- Yukarı Çık Butonu -->
-    <a href="#" class="btn btn-sm btn-outline-light position-absolute end-0 me-3 top-50 translate-middle-y">
-      <i class="fas fa-chevron-up"></i>
-    </a>
-  </div>
-</footer>
-<script>
-  document.querySelectorAll('a[href="#"]').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  });
-</script>
 
 <script>
 const app = Vue.createApp({
@@ -211,13 +134,35 @@ const app = Vue.createApp({
         telefon: '',
         cinsiyet: '',
         neden: '',
-        hizmet: [],
-        tarih: '',
+        ilgi: [],
         mesaj: ''
-      }
-    };
+      },
+      hatalar: {}
+    }
   },
   methods: {
+    gonder() {
+      this.hatalar = {};
+
+      if (!this.form.adsoyad.trim()) this.hatalar.adsoyad = true;
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(this.form.email)) this.hatalar.email = true;
+
+      const telRegex = /^[0-9]{10,11}$/;
+      if (!telRegex.test(this.form.telefon)) this.hatalar.telefon = true;
+
+      if (!this.form.cinsiyet) this.hatalar.cinsiyet = true;
+
+      if (!this.form.ilgi.length) this.hatalar.ilgi = true;
+
+      if (Object.keys(this.hatalar).length > 0) {
+        return;
+      }
+
+      sessionStorage.setItem("iletisimFullForm", JSON.stringify(this.form));
+      window.location.href = "iletisim_sonuc.html";
+    },
     temizle() {
       this.form = {
         adsoyad: '',
@@ -225,30 +170,16 @@ const app = Vue.createApp({
         telefon: '',
         cinsiyet: '',
         neden: '',
-        hizmet: [],
-        tarih: '',
+        ilgi: [],
         mesaj: ''
       };
-    },
-    gonder() {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const telefonRegex = /^[0-9]{10,11}$/;
-
-      if (!this.form.adsoyad || !emailRegex.test(this.form.email) || !telefonRegex.test(this.form.telefon)) {
-        alert("Zorunlu alanları doldurun (ad, e-posta, telefon).");
-        return;
-      }
-
-      sessionStorage.setItem("iletisimFullForm", JSON.stringify(this.form));
-      window.location.href = "iletisim_sonuc.html";
+      this.hatalar = {};
     }
   }
 });
 
 app.mount("#app");
 </script>
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

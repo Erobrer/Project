@@ -147,3 +147,16 @@ body {
   border: 1px solid #444;
   color: #fff;
 }
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 1.5rem;
+  color: #fff;
+  text-decoration: none;
+  z-index: 10;
+}
+.close-btn:hover {
+  color: #ffc107;
+}
