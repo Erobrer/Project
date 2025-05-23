@@ -29,7 +29,7 @@
       <div class="card bg-dark border-0 p-4">
         <a href="index.html" class="close-btn">&times;</a>
         <div class="card-body">
-          <form id="loginForm">
+          <form id="loginForm" action="login.php" method="POST" onsubmit="return validateForm()">
             <div class="mb-3">
               <label class="form-label text-light">E-posta</label>
               <input type="email" id="email" class="form-control" required>
@@ -50,24 +50,55 @@
 </div>
 
 <script>
+function validateForm() {
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const emailRegex = /^[\\w-\\.]+@sakarya\\.edu\\.tr$/;
+
+  if (!email || !password) {
+    alert("Lütfen tüm alanları doldurun.");
+    return false;
+  }
+
+  if (!emailRegex.test(email)) {
+    alert("Lütfen sakarya.edu.tr uzantılı bir e-posta girin.");
+    return false;
+  }
+
+  return true; // PHP'ye gönderilir
+}
+</script>
+
+<script>
   document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
     const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
+    const password = document.getElementById('password').value.trim();
 
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = users.find(u => u.email === email && u.password === password);
-
-    if (user) {
-      localStorage.setItem('loggedUser', JSON.stringify(user));
-      alert("Giriş başarılı, yönlendiriliyorsunuz...");
-      window.location.href = "index.html";
-    } else {
-      alert("E-posta ya da şifre hatalı!");
-    }
+    fetch('login.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "success") {
+        localStorage.setItem('loggedUser', JSON.stringify({
+          username: data.username,
+          email: data.email
+        }));
+        window.location.href = "index.html";
+      } else {
+        alert("Giriş başarısız. Lütfen bilgilerinizi kontrol edin.");
+      }
+    });
   });
 </script>
+
+
 
 </body>
 </html>

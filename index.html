@@ -107,13 +107,12 @@
 
   if (loggedUser) {
     navbarArea.innerHTML = `
-      <span class="text-light me-3">Merhaba, <strong>${loggedUser.username}</strong></span>
+      <span class="text-light me-3">Hoşgeldiniz, <strong>${loggedUser.username}</strong></span>
       <button class="btn btn-outline-warning btn-sm" id="logoutBtn">Çıkış Yap</button>
     `;
-
     document.getElementById('logoutBtn').addEventListener('click', () => {
       localStorage.removeItem('loggedUser');
-      location.reload(); // sayfayı yenile
+      location.reload();
     });
   } else {
     navbarArea.innerHTML = `
@@ -122,6 +121,7 @@
     `;
   }
 </script>
+
 
   <footer class="bg-dark text-light mt-5 pt-4">
     <div class="container">
